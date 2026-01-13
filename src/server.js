@@ -1,8 +1,8 @@
 const express = require('express');
-const authRoutes = require('./config/database');
 const {HTTP_STATUS}=require('./constants/httpStatusCode');
 const {MESSAGES_OPERATION}=require('./constants/statusMessages');
 const { errorHandler, error } = require('./middleware/errorHandler');
+const { router } = require('./routes/authRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 3002;
@@ -23,7 +23,7 @@ app.get('/', (req, res) => {
   });
 });
 
-//app.use('/api/auth', authRoutes);
+app.use('/api/auth',router);
 
 // Error handling
 app.use((req,res,next)=>{
