@@ -4,12 +4,14 @@ const MESSAGES_OPERATION= Object.freeze({
     TITTLE_REQUIRED:"Title is required",
     SERVER_ERROR:"Internal Server Error",
     EMAIL_ALREADY_EXIST:"Email already registered",
+    CREDENCIAL_INVALID:"Invalid credentials",
     URL_NO_FOUND:(url)=>`Path: ${url}, no Found`
 });
 const MESSAGES_VALIDATION=({
     EMAIIL_TOO_LONG:"Email must be 255 chareacters or less",
     EMAIL_INVALID:"Valid email required",
     PASSWORD_TOO_SHORT:"Password must be at least 6 characters",
+    PASSWORD_EMPTY:"Password required",
     NAME_REQUIRED:"Name is required",
     NAME_TOO_LONG:"Name too long"
 });

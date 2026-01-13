@@ -1,6 +1,6 @@
 const {body,validationResult}=require('express-validator');
 const {VALIDATION_VALUES}=require('../constants/validations');
-const {MESSAGES_VALIDATION}=require('../constants/statusMessages');
+const {MESSAGES_VALIDATION, MESSAGES_OPERATION}=require('../constants/statusMessages');
 const {HTTP_STATUS}=require('../constants/httpStatusCode');
 
 const validateRegister=[
@@ -28,6 +28,32 @@ const validateRegister=[
         }
         next();
     }
+];
+
+const validateLogin=[
+    body('email')
+        .trim()
+        .isEmail().withMessage(MESSAGES_VALIDATION.EMAIL_INVALID)
+        .normalizeEmail(),
+    body('password')
+        .trim()
+        .notEmpty().withMessage(MESSAGES_VALIDATION.PASSWORD_EMPTY),
+    (req,res,next)=>{
+        const errors=validationResult(req);
+        if(!errors.isEmpty()){
+            return res.status(HTTP_STATUS.BAD_REQUEST).json({
+                success:false,
+                errors:errors.array().map(err=>({
+                    field:err.path,
+                    message:err.msg
+                }))
+            })
+        }
+        next();
+    }
 ]
 
-module.exports={validateRegister};
+module.exports={
+    validateRegister,
+    validateLogin   
+};
