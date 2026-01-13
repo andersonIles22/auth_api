@@ -1,0 +1,4 @@
+.env
+node_modules/
+Test-scripts.js
+Test-sql.sql
