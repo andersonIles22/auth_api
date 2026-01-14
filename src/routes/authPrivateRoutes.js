@@ -8,4 +8,4 @@ const router=express.Router();
 router.use(protect);
 router.get('/allDb',authController.getAll),
 
-module,exports={router};
+module,exports=router;
