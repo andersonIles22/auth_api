@@ -5,6 +5,6 @@ const authPrivatRoutes=require('./authPrivateRoutes');
 const router=express.Router();
 
 router.use('/auth', authPublicRoutes);
-router.use('(/auth',authPrivatRoutes);
+router.use('/auth',authPrivatRoutes);
 
 module.exports=router;

@@ -23,7 +23,7 @@ app.get('/', (req, res) => {
   });
 });
 
-app.use('/api/auth',router);
+app.use('/api',router);
 
 // Error handling
 app.use((req,res,next)=>{
