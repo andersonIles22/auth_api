@@ -91,3 +91,37 @@ Login usuario existente.
     "token": "..."
   }
 }
+
+## Features
+- Obtención de tokens
+- Validación de tokens Bearers
+
+## Endpoints
+### POST /api/auth/allDb
+Obtener todos los usuarios.
+
+**Response 200:**
+```json
+{
+  "success": true,
+  "data": [
+    //get id, name and email of all Users
+  ]
+}
+```
+Para obtener los tokens en la APP Bruno, se debe logear un las credenciales correspondientes, una vez obtenido un OK, se obtendra el token también. La copiamos y luego cuando se necesite hacer un GET a /api/auth/allDb se debe incluir el token en el apartado Auth.
+
+## Ejemplos
+### Obtener el token generado por cada login
+Realizando un POST con los credenciales correspondientes registrados en la base de datos.
+#### Obteniendo:
+![alt text](./screenShots/image2.png)
+### Obtener todos los usuarios con token
+Realizando un GET a http://localhost:3001/api/auth/allDb
+#### Obteniendo:
+![alt text](./screenShots/image.png)
+
+### Obtener todos los usuarios sin token
+GET a http://localhost:3001/api/auth/allDb
+#### Obteniendo:
+![alt text](./screenShots/image1.png)
