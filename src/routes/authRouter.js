@@ -1,4 +1,4 @@
-const express = require("express");
+const express = require('express');
 const authPublicRoutes=require('./authPublicRoutes');
 const authPrivatRoutes=require('./authPrivateRoutes');
 
