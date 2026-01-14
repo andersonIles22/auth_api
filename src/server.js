@@ -5,7 +5,7 @@ const { errorHandler, error } = require('./middleware/errorHandler');
 const { router } = require('./routes/authRoutes');
 
 const app = express();
-const PORT = process.env.PORT || 3002;
+const PORT = process.env.PORT || 3001;
 
 // Middleware
 app.use(express.json());
