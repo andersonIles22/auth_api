@@ -125,3 +125,19 @@ Realizando un GET a http://localhost:3001/api/auth/allDb
 GET a http://localhost:3001/api/auth/allDb
 #### Obteniendo:
 ![alt text](./screenShots/image1.png)
+
+## Deployment
+
+### Environment Variables Required
+
+- `PORT` - Puerto del servidor
+- `DATABASE_URL` - PostgreSQL connection string
+- `NODE_ENV` - "production" para producción
+
+### Deploy to RailWay
+
+1. Conectar repositorio GitHub
+2. Crear PostgreSQL database
+3. Crear Web Service
+4. Configurar variables de entorno
+5. Deploy automático
