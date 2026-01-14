@@ -19,5 +19,4 @@ const authMiddleware= (req,res,next)=>{
     }
 };
 
-module.exports={
-    protect:authMiddleware}
+module.exports=authMiddleware
