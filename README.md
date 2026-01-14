@@ -91,7 +91,7 @@ Login usuario existente.
     "token": "..."
   }
 }
-
+```
 ## Features
 - Obtención de tokens
 - Validación de tokens Bearers
