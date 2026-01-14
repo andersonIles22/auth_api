@@ -21,7 +21,6 @@ const register=async (req,res,next)=>{
         // CREATE USER
         const result =await db.query('INSERT INTO users (email,password,name) VALUES($1,$2,$3) RETURNING *',[email,hashedPassword,name]);
         const userCreated= result.rows[0];
-        console.log(userCreated)
 
         const token=jwt.sign(
             {id:userCreated.id, email:userCreated.email},

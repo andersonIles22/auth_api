@@ -9,12 +9,16 @@ const {HTTP_STATUS}=require('../constants/httpStatusCode')
  */
 const errorHandler=(err, req, res, next)=>{
   // si queremos mostrar la linea de codigo donde empieza a fallar
-  console.error('Error:', err.stack);
+  //console.error('Error:', err.stack);
   
   const statusCode = err.status || HTTP_STATUS.INTERNAL_ERROR;
   const message = err.message || MESSAGES_OPERATION.SERVER_ERROR;
   
-
+  if(!err.isClientError){
+    console.err("Error de sistema",err.stack)
+  }else{
+    console.log(`Error de cliente ${statusCode}:${message}`)
+  }
   res.status(statusCode).json({
     success: false,
     error: message,
@@ -31,6 +35,7 @@ const errorHandler=(err, req, res, next)=>{
 const error=(statusCode,message, next)=>{
     const error=new Error(message);
     error.status=statusCode;
+    error.isClientError=true;
     next(error);
 };
 
