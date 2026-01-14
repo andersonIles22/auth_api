@@ -94,7 +94,19 @@ try {
   }
 }
 
+const getAll=async(req,res,next)=>{
+  try {
+    const queryAllNotes=await db.query('SELECT id,name,email FROM users');
+    res.status(HTTP_STATUS.OK).json({
+      success:true,
+      data:queryAllNotes.rows
+    });
+  } catch (error) {
+    next(error);
+  }
+}
 module.exports={
     register,
-    login
+    login,
+    getAll
 }
