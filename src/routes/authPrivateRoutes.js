@@ -6,6 +6,6 @@ const router=express.Router();
 
 //router.use(authMiddleware);
 router.get('/allDb',authController.getAll),
-console.log('PRIVATE ROUTES HIT:', req.method, req.path);
+console.log('PRIVATE ROUTES HIT:');
 
 module.exports=router;

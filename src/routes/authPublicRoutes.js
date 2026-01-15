@@ -6,4 +6,6 @@ const router=express.Router();
 
 router.post('/register',validateRegister,authController.register);
 router.post('/login',validateLogin,authController.login);
+console.log('PUBLIC ROUTES HIT:');
+
 module.exports=router;
