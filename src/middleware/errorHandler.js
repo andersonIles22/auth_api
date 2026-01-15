@@ -17,7 +17,7 @@ const errorHandler=(err, req, res, next)=>{
   if(!err.isClientError){
     console.error("Error de sistema",err.stack)
   }else{
-    console.log(`Error de cliente ${statusCode}:${message}`)
+    console.log(`Error de cliente ${statusCode}:${message}`,err.stack)
   }
   res.status(statusCode).json({
     success: false,
