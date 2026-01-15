@@ -9,7 +9,7 @@ const register=async (req,res,next)=>{
     try {
         //CHECK IF EMAIL ALREADY EXISTS
         const {email, password, name}=req.body;
-        const queryRegister=await db.query('SELECT id FROM users WHERE email=$1',[email]);
+        const queryRegister=await db.query('SELECT id FROM users_admin WHERE email=$1',[email]);
         
         if(queryRegister.rows.length>0){
             return error(HTTP_STATUS.BAD_REQUEST,MESSAGES_OPERATION.EMAIL_ALREADY_EXIST,next)
@@ -19,7 +19,7 @@ const register=async (req,res,next)=>{
         const hashedPassword=await bcrypt.hash(password,salt)
 
         // CREATE USER
-        const result =await db.query('INSERT INTO users (email,password,name) VALUES($1,$2,$3) RETURNING *',[email,hashedPassword,name]);
+        const result =await db.query('INSERT INTO users_admin (email,password,name) VALUES($1,$2,$3) RETURNING *',[email,hashedPassword,name]);
         const userCreated= result.rows[0];
 
         const token=jwt.sign(
@@ -51,7 +51,7 @@ try {
     
     // 1. Verificar que usuario existe
     const result = await db.query(
-      'SELECT * FROM users WHERE email = $1',
+      'SELECT * FROM users_admin WHERE email = $1',
       [email]
     );
     
@@ -95,7 +95,7 @@ try {
 
 const getAll=async(req,res,next)=>{
   try {
-    const queryAllNotes=await db.query('SELECT id,name,email FROM users');
+    const queryAllNotes=await db.query('SELECT id,name,email FROM users_admin');
     res.status(HTTP_STATUS.OK).json({
       success:true,
       data:queryAllNotes.rows
