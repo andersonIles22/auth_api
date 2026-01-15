@@ -15,7 +15,7 @@ const authMiddleware= (req,res,next)=>{
         req.user=decoded;
         next();
     } catch (err) {
-        return error(HTTP_STATUS.AUTHORIZATION_REQUIRED,MESSAGES_OPERATION.TOKEN_INVALID,next);
+        next(err)
     }
 };
 
