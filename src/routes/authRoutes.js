@@ -5,11 +5,11 @@ const  {authMiddleware} = require("../middleware/auth");
 
 const router=express.Router();
 
-router.post('/register',validateRegister,authController.register);
+router.get('/register',validateRegister,authController.register);
 router.post('/login',validateLogin,authController.login);
 
 router.get('/message',validateRegister,authController.getSomethin);
-router.post('/users',authController.postSomethin);
+router.get('/users',authController.postSomethin);
 //router.use(authMiddleware);
 router.get('/allDb',authMiddleware,authController.getAll);
 
