@@ -4,14 +4,11 @@ const { validateRegister, validateLogin } = require('../middleware/validation');
 const  authMiddleware = require("../middleware/auth");
 
 const router=express.Router();
-router.post('/register', (req,res) => {
-  res.json({ ok: true });
-});
-router.post('/login',(req,res) => {
-  res.json({ ok: "wasap" });
-});
+router.post('/register',validateRegister,authController.register);
+router.post('/login',validateLogin,authController.login);
 
 //router.use(authMiddleware);
 router.get('/allDb',authController.getAll);
 
+console.log(validateRegister,validateLogin)
 module.exports=router;
