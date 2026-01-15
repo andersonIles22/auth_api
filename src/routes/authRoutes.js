@@ -1,3 +1,4 @@
+console.log("la ptm")
 const express = require('express');
 const authController = require('../controllers/authController');
 const { validateRegister, validateLogin } = require('../middleware/validation');
@@ -10,5 +11,4 @@ router.post('/login',validateLogin,authController.login);
 //router.use(authMiddleware);
 router.get('/allDb',authController.getAll);
 
-console.log(validateRegister,validateLogin)
 module.exports=router;
