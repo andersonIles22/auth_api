@@ -8,6 +8,7 @@ const router=express.Router();
 router.post('/register',validateRegister,authController.register);
 router.post('/login',validateLogin,authController.login);
 
+router.get('/message',authController.getSomethin);
 //router.use(authMiddleware);
 router.get('/allDb',authMiddleware,authController.getAll);
 

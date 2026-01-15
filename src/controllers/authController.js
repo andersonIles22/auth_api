@@ -104,8 +104,17 @@ const getAll=async(req,res,next)=>{
     next(error);
   }
 }
+
+const getSomethin=(req,res,next)=>{
+  try {
+    res.status(200).json({message:'todo piola wey'})
+  } catch (error) {
+    next(error)
+  } 
+}
 module.exports={
     register,
     login,
-    getAll
+    getAll,
+    getSomethin
 }
