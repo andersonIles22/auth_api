@@ -6,7 +6,7 @@ const { MESSAGES_OPERATION } = require('../constants/statusMessages');
 const authMiddleware= (req,res,next)=>{
     const getAuth=req.headers.authorization;
     if(!getAuth || !getAuth.startsWith('Bearer')){
-        return error(HTTP_STATUS.AUTHORIZATION_REQUIRED,MESSAGES_OPERATION.TOKEN_INVALID,next)
+        return error(HTTP_STATUS.AUTHORIZATION_REQUIRED,"campo 1, ya estoi arto",next)
     }
 
     const onlyToken=getAuth.split(' ')[1];
@@ -15,7 +15,7 @@ const authMiddleware= (req,res,next)=>{
         req.user=decoded;
         next();
     } catch (err) {
-        next(err)
+        return error(HTTP_STATUS.AUTHORIZATION_REQUIRED,"Campo 2, este wey",next);
     }
 };
 
