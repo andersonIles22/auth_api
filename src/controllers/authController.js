@@ -105,31 +105,9 @@ const getAll=async(req,res,next)=>{
   }
 }
 
-const getSomethin=(req,res,next)=>{
-  try {
-    res.status(200).json({message:'todo piola wey'})
-  } catch (error) {
-    next(error)
-  } 
-}
-const postSomethin=async (req,res,next)=>{
-  try {
-    const {email,password,name}=req.body;
-    const queryPostSomething=db.query('INSERT into users_admin (email,password,name) values($1,$2,$3) RETURNING *',[email,password,name]);
-    res.status(201).json({
-      success:true,
-      message:"Se creo esta wea",
-      date:queryPostSomething.rows[0]
-    })
-  } catch (error) {
-    next(error)
-  }
-  
-}
+
 module.exports={
     register,
     login,
-    getAll,
-    getSomethin,
-    postSomethin
+    getAll
 }
