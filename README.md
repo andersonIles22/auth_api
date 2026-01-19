@@ -141,3 +141,16 @@ GET a http://localhost:3001/api/auth/allDb
 3. Crear Web Service
 4. Configurar variables de entorno
 5. Deploy automático
+
+## Live Demo
+
+🚀 **Production URL:** https://authapi-production-8843.up.railway.app/
+
+### Endpoints
+
+- POST /api/auth/register - Register user
+- POST /api/auth/login - Login user
+- GET /api/auth/allDb - Get current all users (protected)
+
+### Bruno Tests
+Para hacer los mismo tests realizado en bruno, se puede importar el archivo docs/Test Auth_api Desployed.json a Bruno
