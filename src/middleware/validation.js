@@ -1,6 +1,6 @@
 const {body,validationResult}=require('express-validator');
 const {VALIDATION_VALUES}=require('../constants/validations');
-const {MESSAGES_VALIDATION, MESSAGES_OPERATION}=require('../constants/statusMessages');
+const {MESSAGES_VALIDATION}=require('../constants/statusMessages');
 const {HTTP_STATUS}=require('../constants/httpStatusCode');
 
 const validateRegister=[

@@ -10,14 +10,6 @@ const PORT = process.env.PORT || 3001;
 // Middleware
 app.use(express.json());
 
-// CORS middleware - allow cross-origin requests and handle preflight
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*'); // ajustar origen según necesidad
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-  res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE,OPTIONS');
-  if (req.method === 'OPTIONS') return res.sendStatus(204);
-  next();
-});
 
 // Routes
 app.get('/', (req, res) => {
@@ -41,5 +33,5 @@ app.use((req,res,next)=>{
 app.use(errorHandler);
 
 app.listen(PORT, () => {
-  console.log(`🚀 Auth API running on port ${PORT}`);
+  console.log(`Auth API running on port ${PORT}`);
 });
