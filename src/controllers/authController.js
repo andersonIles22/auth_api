@@ -128,7 +128,9 @@ const refreshToken= async(req,res,next)=>{
   //Consultamos el refresh token de la db
     const querySearchTokenRefresh=await db.query(
       `SELECT token,expires_at,isrevoked FROM refresh_token WHERE id=$1`,[id]);
-    const {token,expires_at,isrevoked}=querySearchTokenRefresh.rows[0];
+    console.log(querySearchTokenRefresh.rows[0]);
+    
+      const {token,expires_at,isrevoked}=querySearchTokenRefresh.rows[0];
 
     //verificamos si coinciden el refresh token obtenido y el de la db
     const isMatch=await bcrypt.compare(refreshToken,token);
