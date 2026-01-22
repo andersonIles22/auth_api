@@ -164,7 +164,7 @@ const refreshToken= async(req,res,next)=>{
     });
   } catch (error) {
       //verificamos si el token ha expirado
-      if(error.name='TokenExpiredError') return error(401,MESSAGES_OPERATION.TOKEN_EXPIRED,next);
+      if(error.name='TokenExpiredError') error(401,MESSAGES_OPERATION.TOKEN_EXPIRED,next);
     next(error);
   }
 }
