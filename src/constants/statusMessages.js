@@ -5,7 +5,8 @@ const MESSAGES_OPERATION= Object.freeze({
     SERVER_ERROR:"Internal Server Error",
     EMAIL_ALREADY_EXIST:"Email already registered",
     CREDENCIAL_INVALID:"Invalid credentials",
-    TOKEN_INVALID:"No token provided or token invalid",
+    TOKEN_INVALID:"Token Invalid",
+    TOKEN_REQUIRED:"Token Required",
     TOKEN_EXPIRED:'Token has expired',
     URL_NO_FOUND:(url)=>`Path: ${url}, no Found`
 });

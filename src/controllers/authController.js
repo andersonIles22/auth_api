@@ -124,30 +124,25 @@ try {
 const refreshToken= async(req,res,next)=>{
   const {refreshToken}=req.cookies;
   try {
+    // Verificamos si el token existe
     if(!refreshToken){
       console.log(refreshToken)
-      return error(401,MESSAGES_OPERATION.TOKEN_INVALID,next)
+      return error(401,MESSAGES_OPERATION.TOKEN_REQUIRED,next)
     } 
-      
-    
-      //Validamos y decodificamos el JWT
+    //Validamos y decodificamos el JWT
     const decoded=jwt.verify(refreshToken,process.env.JWT_SECRET_REFRESH);
     const {id}=decoded;
-  //Consultamos el refresh token de la db
+    
+    //Consultamos el refresh token de la db
     const querySearchTokenRefresh=await db.query(
       `SELECT token,expires_at,isrevoked FROM refresh_token WHERE id_user=$1`,[id]);
-    //console.log(id,querySearchTokenRefresh,querySearchTokenRefresh.rows[0]);
-    
-      const {token,expires_at,isrevoked}=querySearchTokenRefresh.rows[0];
-
+      
+    const {token,expires_at,isrevoked}=querySearchTokenRefresh.rows[0];
+      
     //verificamos si coinciden el refresh token obtenido y el de la db
     const isMatch=await bcrypt.compare(refreshToken,token);
-    if(!isMatch) return error(401,MESSAGES_OPERATION.CREDENCIAL_INVALID,next);
-    
-    //verificamos si el token ha expirado
-    let dateToExpireToken= new Date(expires_at);
-    if(Date.now>=dateToExpireToken) return error(401,MESSAGES_OPERATION.TOKEN_EXPIRED,next);
-
+    if(!isMatch) return error(401,MESSAGES_OPERATION.TOKEN_INVALID,next);
+      
     //verificamos si el token ha sido revocado
     if(isrevoked===true) return error(401,MESSAGES_OPERATION.TOKEN_INVALID,next);
 
@@ -168,6 +163,8 @@ const refreshToken= async(req,res,next)=>{
       accessToken: newToken
     });
   } catch (error) {
+      //verificamos si el token ha expirado
+      if(error.name='TokenExpiredError') return error(401,MESSAGES_OPERATION.TOKEN_EXPIRED,next);
     next(error);
   }
 }
