@@ -127,8 +127,8 @@ const refreshToken= async(req,res,next)=>{
     const {id}=decoded;
   //Consultamos el refresh token de la db
     const querySearchTokenRefresh=await db.query(
-      `SELECT token,expires_at,isrevoked FROM refresh_token WHERE id=$1`,[id]);
-    console.log(id,querySearchTokenRefresh,querySearchTokenRefresh.rows[0]);
+      `SELECT token,expires_at,isrevoked FROM refresh_token WHERE id_user=$1`,[id]);
+    //console.log(id,querySearchTokenRefresh,querySearchTokenRefresh.rows[0]);
     
       const {token,expires_at,isrevoked}=querySearchTokenRefresh.rows[0];
 
