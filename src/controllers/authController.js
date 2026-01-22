@@ -121,7 +121,12 @@ try {
 const refreshToken= async(req,res,next)=>{
   const {refreshToken}=req.cookies;
   try {
-    if(!refreshToken) return error(401,MESSAGES_OPERATION.TOKEN_INVALID,next)
+    if(!refreshToken){
+      console.log(refreshToken)
+      return error(401,MESSAGES_OPERATION.TOKEN_INVALID,next)
+    } 
+      
+    
       //Validamos y decodificamos el JWT
     const decoded=jwt.verify(refreshToken,process.env.JWT_SECRET_REFRESH);
     const {id}=decoded;
