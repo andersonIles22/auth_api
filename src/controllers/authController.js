@@ -162,10 +162,10 @@ const refreshToken= async(req,res,next)=>{
     res.json({
       accessToken: newToken
     });
-  } catch (error) {
+  } catch (err) {
       //verificamos si el token ha expirado
-      if(error.name='TokenExpiredError') error(401,MESSAGES_OPERATION.TOKEN_EXPIRED,next);
-    next(error);
+      if(err.name='TokenExpiredError') error(401,MESSAGES_OPERATION.TOKEN_EXPIRED,next);
+    next(err);
   }
 }
 const getAll=async(req,res,next)=>{
