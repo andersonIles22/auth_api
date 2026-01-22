@@ -98,7 +98,7 @@ try {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'Strict',
-      expires: refreshTokenExpiresAt
+      expires: refreshTokenExpiresAt+3600000
     });
     //  Responder (NO enviamos password)
     res.json({
