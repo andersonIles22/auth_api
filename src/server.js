@@ -3,6 +3,7 @@ const {HTTP_STATUS}=require('./constants/httpStatusCode');
 const {MESSAGES_OPERATION}=require('./constants/statusMessages');
 const { errorHandler, error } = require('./middleware/errorHandler');
 const {router} = require('./routes/authRoutes');
+const cookieParser=require('cookie-parser');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
