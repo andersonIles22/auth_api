@@ -89,7 +89,7 @@ try {
     );
     // Almacenar el Refresh Token Hasheado en la base de datos
     await db.query(
-      `INSERT INTO refresh_token (user_id,token,expires_at) VALUES ($1,$2,$3)`,[user.id,hashedTokenRefresh,refreshTokenExpiresAt]
+      `INSERT INTO refresh_token (id_user,token,expires_at) VALUES ($1,$2,$3)`,[user.id,hashedTokenRefresh,refreshTokenExpiresAt]
     )
 
     // Enviar Refresh Token a una cookie segura
