@@ -91,14 +91,17 @@ try {
     // Almacenar el Refresh Token Hasheado en la base de datos
     await db.query(
       `INSERT INTO refresh_token (id_user,token,expires_at) VALUES ($1,$2,$3)`,[user.id,hashedTokenRefresh,refreshTokenExpiresAt]
-    )
+    );
+
+    // Aumentamos 1 min a la fecha de expiración de la cookie para indicar que la fecha de expiración de la db esta expirada.
+    const dateExpired=new Date(new Date(refreshTokenExpiresAt).getTime()+60000);
 
     // Enviar Refresh Token a una cookie segura
     res.cookie('refreshToken', refreshToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'Strict',
-      expires: refreshTokenExpiresAt+60000
+      expires: dateExpired
     });
     //  Responder (NO enviamos password)
     res.json({
