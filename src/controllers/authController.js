@@ -5,6 +5,7 @@ const {error}=require('../middleware/errorHandler');
 const {HTTP_STATUS}=require('../constants/httpStatusCode');
 const {MESSAGES_OPERATION}=require('../constants/statusMessages');
 const { parseTime } = require('../helpers/parseTime');
+const { user } = require('pg/lib/defaults');
 
 const register=async (req,res,next)=>{
     try {
@@ -117,6 +118,49 @@ try {
   }
 }
 
+const refreshToken= async(req,res,next)=>{
+  const {refreshToken}=req.cookies;
+  try {
+    if(!refreshToken) return error(401,MESSAGES_OPERATION.TOKEN_INVALID,next)
+      //Validamos y decodificamos el JWT
+    const decoded=jwt.verify(refreshToken,process.env.JWT_SECRET_REFRESH);
+    const {id}=decoded;
+  //Consultamos el refresh token de la db
+    const querySearchTokenRefresh=await db.query(
+      `SELECT token,expires_at,isrevoked FROM refresh_token WHERE id=$1`,[id]);
+    const {token,expires_at,isrevoked}=querySearchTokenRefresh.rows[0];
+
+    //verificamos si coinciden el refresh token obtenido y el de la db
+    const isMatch=await bcrypt.compare(refreshToken,token);
+    if(!isMatch) return error(401,MESSAGES_OPERATION.CREDENCIAL_INVALID,next);
+    
+    //verificamos si el token ha expirado
+    let dateToExpireToken= new Date(expires_at);
+    if(Date.now>=dateToExpireToken) return error(401,MESSAGES_OPERATION.TOKEN_EXPIRED,next);
+
+    //verificamos si el token ha sido revocado
+    if(isrevoked===true) return error(401,MESSAGES_OPERATION.TOKEN_INVALID,next);
+
+    //Creamos nuevo token
+    const queryData=await db.query(
+      `SELECT id,email FROM users_admin WHERE id=$1`,
+      [id]
+    )
+    const user=queryData.rows[0];
+    const newToken=jwt.sign(
+      { id: user.id, email: user.email },
+      process.env.JWT_SECRET,
+      { expiresIn: process.env.JWT_EXPIRES_IN || '15min' }
+    );
+
+    // Respondemos con el token nuevo
+    res.json({
+      accessToken: newToken
+    });
+  } catch (error) {
+    next(error);
+  }
+}
 const getAll=async(req,res,next)=>{
   try {
     const queryAllNotes=await db.query('SELECT id,name,email FROM users_admin');
@@ -133,5 +177,6 @@ const getAll=async(req,res,next)=>{
 module.exports={
     register,
     login,
-    getAll
+    getAll,
+    refreshToken
 }

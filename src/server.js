@@ -9,6 +9,8 @@ const PORT = process.env.PORT || 3001;
 
 // Middleware
 app.use(express.json());
+app.use(cookieParser());
+
 
 
 // Routes
