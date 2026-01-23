@@ -53,7 +53,40 @@ const validateLogin=[
     }
 ]
 
+const validateChangePassword = [
+  body('currentPass')
+    .notEmpty().withMessage(MESSAGES_VALIDATION.PASSWORD_EMPTY),
+  body('newPass')
+    .isLength({ min:VALIDATION_VALUES.MIN_LENGTH_PASSWORD }).withMessage(MESSAGES_VALIDATION.NEW_PASSWORD_TOO_SHORT)
+    .custom((value, { req }) => {
+      if (value === req.body.currentPass) {
+        throw new Error(MESSAGES_VALIDATION.NEW_PASSWORD_IS_EQUAL_TO_CURRENT_PASSWORD);
+      }
+      return true;
+    }),
+    body('confirmPass')
+        .custom((value,{req})=>{
+            if (value!==req.body.newPass){
+                throw new Error(MESSAGES_VALIDATION.NEW_PASS_NO_EQUAL_CONFIRM_PASS)
+            }
+            return true;
+        }),
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(HTTP_STATUS.BAD_REQUEST).json({
+        success: false,
+        errors:errors.array().map(err=>({
+            field:err.path,
+            message:err.msg
+        }))
+      });
+    }
+    next();
+  }
+];
 module.exports={
     validateRegister,
-    validateLogin   
+    validateLogin,
+    validateChangePassword   
 };

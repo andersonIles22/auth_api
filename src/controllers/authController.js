@@ -3,7 +3,7 @@ const bcrypt=require('bcryptjs');
 const jwt=require('jsonwebtoken');
 const {error}=require('../middleware/errorHandler');
 const {HTTP_STATUS}=require('../constants/httpStatusCode');
-const {MESSAGES_OPERATION}=require('../constants/statusMessages');
+const {MESSAGES_OPERATION, MESSAGES_VALIDATION}=require('../constants/statusMessages');
 const { parseTime } = require('../helpers/parseTime');
 const { user } = require('pg/lib/defaults');
 
@@ -168,6 +168,41 @@ const refreshToken= async(req,res,next)=>{
     next(err);
   }
 }
+
+const changePassword=async (req, res, next)=>{
+  const {currentPass,newPass,confirmPass}=req.body;
+  const {id}=req.user;
+  try {
+    const queryPass=await db.query(
+      `SELECT password FROM users_admin WHERE id=$1`,
+      [id]
+    )
+    // Validamos que la contraseña actual sea la correcta
+    const isMatchCurrentPass=await bcrypt.compare(currentPass,queryPass.rows[0].password);
+    if(!isMatchCurrentPass) return error(HTTP_STATUS.BAD_REQUEST,MESSAGES_VALIDATION.CURRENT_PASSWORD_INCORRECT,next);
+
+    // Creamos nueva contraseña hasheada
+    const salt=await bcrypt.genSalt(12);
+    const hashedPass=await bcrypt.hash(newPass,salt);
+    
+    //Actualizamos la contraseña
+    const queryUpdate= await db.query(
+      `UPDATE users_admin SET password =$1 WHERE id=$2`,
+      [hashedPass,id]
+    );
+    //Forzamos a un nuevo login
+    const queryDelete=await db.query(
+      `DELETE FROM refresh_token WHERE id=$1`,
+      [id]
+    );
+    res.status(HTTP_STATUS.OK).json({
+      success:true,
+      message:"La Contraseña ha sido actualizada correctamente"
+    })
+  } catch (err) {
+      next(err);
+  }
+}
 const getAll=async(req,res,next)=>{
   try {
     const queryAllNotes=await db.query('SELECT id,name,email FROM users_admin');
@@ -185,5 +220,6 @@ module.exports={
     register,
     login,
     getAll,
-    refreshToken
+    refreshToken,
+    changePassword
 }
