@@ -154,3 +154,62 @@ GET a http://localhost:3001/api/auth/allDb
 
 ### Bruno Tests
 Para hacer los mismo tests realizado en bruno, se puede importar el archivo docs/Test Auth_api Desployed.json a Bruno
+
+## Endpoints
+
+### Authentication
+#### POST /api/auth/login
+Login existing user.
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "user": { ... },
+  },
+  "token":"access token"
+}
+```
+El refresh token es enviado al navegador que lo almacenará en las cookies.
+#### POST /api/auth/refresh
+Obtener access token usando el refresh token
+
+**Request:**
+El navegador automaticamente adjunta todas las cookies validas en la cabecera de cada petición hacia el servidor. 
+El servidor la recibe en texto plano y desordenado, donde utiliza el middleware cookieParser() para procesarlo e inyectarlo en el objeto req.cookies.
+```string
+  "refresh-token"
+```
+
+**Response:**
+```json
+{
+    "accessToken": "new-access-token"
+}
+```
+
+#### GET /api/auth/allDb
+Obtener información de todos los usuarios (Protegido).
+
+**Headers:**
+```
+Authorization: Bearer access-token
+```
+
+#### PUT /api/auth/change-password
+Cambiar contraseña de usuario (Protegido).
+
+**Headers:**
+```
+Authorization: Bearer access-token
+```
+
+**Request:**
+```json
+{
+  "currentPass": "old-password",
+  "newPass": "new-password",
+  "confirmPass":"same-new-password"
+}
+```

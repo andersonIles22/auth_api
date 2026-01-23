@@ -4,9 +4,9 @@
   "items": [
     {
       "type": "folder",
-      "name": "Error Request",
-      "filename": "Error Request",
-      "seq": 2,
+      "name": "POST to api",
+      "filename": "POST to api",
+      "seq": 4,
       "examples": [],
       "root": {
         "request": {
@@ -15,16 +15,16 @@
           }
         },
         "meta": {
-          "name": "Error Request",
-          "seq": 2
+          "name": "POST to api",
+          "seq": 4
         }
       },
       "items": [
         {
           "type": "http",
-          "name": "Error Data Register",
-          "filename": "Error Data Register.bru",
-          "seq": 1,
+          "name": "INSERT user to server",
+          "filename": "INSERT user to server.bru",
+          "seq": 2,
           "settings": {
             "encodeUrl": true,
             "timeout": 0
@@ -32,13 +32,13 @@
           "tags": [],
           "examples": [],
           "request": {
-            "url": "https://authapi-production-8843.up.railway.app/api/auth/register",
+            "url": "https://authapi-production-8843.up.railway.app/api/auth/register/",
             "method": "POST",
             "headers": [],
             "params": [],
             "body": {
               "mode": "json",
-              "json": "{\"email\":\"\",\n\"password\":\"\",\n\"name\":\"\"}",
+              "json": "{\n  \"email\":\"TamaraV@gmail.vc\",\n  \"password\":\"Postgre\",\n  \"name\":\"Tamara\"\n}",
               "formUrlEncoded": [],
               "multipartForm": [],
               "file": []
@@ -55,9 +55,9 @@
         },
         {
           "type": "http",
-          "name": "Error Data Login",
-          "filename": "Error Data Login.bru",
-          "seq": 2,
+          "name": "Login user to server",
+          "filename": "Login user to server.bru",
+          "seq": 4,
           "settings": {
             "encodeUrl": true,
             "timeout": 0
@@ -71,7 +71,39 @@
             "params": [],
             "body": {
               "mode": "json",
-              "json": "{\"email\":\"francis12@gmailcom\",\n\"password\":\"\"}",
+              "json": "{\n  \"email\":\"TamaraV@gmail.vc\",\n  \"password\":\"Postgre\"\n}",
+              "formUrlEncoded": [],
+              "multipartForm": [],
+              "file": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "docs": "",
+            "auth": {
+              "mode": "inherit"
+            }
+          }
+        },
+        {
+          "type": "http",
+          "name": "Refresh Token",
+          "filename": "Refresh Token.bru",
+          "seq": 3,
+          "settings": {
+            "encodeUrl": true,
+            "timeout": 0
+          },
+          "tags": [],
+          "examples": [],
+          "request": {
+            "url": "https://authapi-production-8843.up.railway.app/api/auth/refresh-token",
+            "method": "POST",
+            "headers": [],
+            "params": [],
+            "body": {
+              "mode": "none",
               "formUrlEncoded": [],
               "multipartForm": [],
               "file": []
@@ -136,7 +168,7 @@
             "auth": {
               "mode": "bearer",
               "bearer": {
-                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJhbmRlcnNvbjE2QGdtYWlsLmNvbSIsImlhdCI6MTc2ODg0MTUxOCwiZXhwIjoxNzY4ODQ4NzE4fQ.t1hseUD4XxVg5bXlN8lQiTXtH1MATFBx5uZVJWhGDVo"
+                "token": ""
               }
             }
           }
@@ -174,9 +206,9 @@
     },
     {
       "type": "folder",
-      "name": "POST to api",
-      "filename": "POST to api",
-      "seq": 4,
+      "name": "Error Request",
+      "filename": "Error Request",
+      "seq": 2,
       "examples": [],
       "root": {
         "request": {
@@ -185,15 +217,15 @@
           }
         },
         "meta": {
-          "name": "POST to api",
-          "seq": 4
+          "name": "Error Request",
+          "seq": 2
         }
       },
       "items": [
         {
           "type": "http",
-          "name": "INSERT user to server",
-          "filename": "INSERT user to server.bru",
+          "name": "Error Data Login",
+          "filename": "Error Data Login.bru",
           "seq": 2,
           "settings": {
             "encodeUrl": true,
@@ -202,13 +234,13 @@
           "tags": [],
           "examples": [],
           "request": {
-            "url": "https://authapi-production-8843.up.railway.app/api/auth/register/",
+            "url": "https://authapi-production-8843.up.railway.app/api/auth/login",
             "method": "POST",
             "headers": [],
             "params": [],
             "body": {
               "mode": "json",
-              "json": "{\n  \"email\":\"fracis16@gmail.com\",\n  \"password\":\"Postgre\",\n  \"name\":\"Francisco\"\n}",
+              "json": "{\"email\":\"francis12@gmailcom\",\n\"password\":\"\"}",
               "formUrlEncoded": [],
               "multipartForm": [],
               "file": []
@@ -225,9 +257,9 @@
         },
         {
           "type": "http",
-          "name": "Login user to server",
-          "filename": "Login user to server.bru",
-          "seq": 4,
+          "name": "Error Data Register",
+          "filename": "Error Data Register.bru",
+          "seq": 1,
           "settings": {
             "encodeUrl": true,
             "timeout": 0
@@ -235,13 +267,13 @@
           "tags": [],
           "examples": [],
           "request": {
-            "url": "https://authapi-production-8843.up.railway.app/api/auth/login",
+            "url": "https://authapi-production-8843.up.railway.app/api/auth/register",
             "method": "POST",
             "headers": [],
             "params": [],
             "body": {
               "mode": "json",
-              "json": "{\n  \"email\":\"anderson16@gmail.com\",\n  \"password\":\"Postgre\"\n}",
+              "json": "{\"email\":\"\",\n\"password\":\"\",\n\"name\":\"\"}",
               "formUrlEncoded": [],
               "multipartForm": [],
               "file": []
@@ -253,6 +285,62 @@
             "docs": "",
             "auth": {
               "mode": "inherit"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "folder",
+      "name": "PATCH  to api",
+      "filename": "PATCH  to api",
+      "seq": 4,
+      "examples": [],
+      "root": {
+        "request": {
+          "auth": {
+            "mode": "inherit"
+          }
+        },
+        "meta": {
+          "name": "PATCH  to api",
+          "seq": 4
+        }
+      },
+      "items": [
+        {
+          "type": "http",
+          "name": "UPDATE password",
+          "filename": "UPDATE password.bru",
+          "seq": 1,
+          "settings": {
+            "encodeUrl": true,
+            "timeout": 0
+          },
+          "tags": [],
+          "examples": [],
+          "request": {
+            "url": "https://authapi-production-8843.up.railway.app/api/auth/change-password",
+            "method": "PATCH",
+            "headers": [],
+            "params": [],
+            "body": {
+              "mode": "json",
+              "json": "{\n  \"currentPass\":\"Postgre\",\n  \"newPass\":\"Mongodb\",\n  \"confirmPass\":\"Mongodb\"\n}",
+              "formUrlEncoded": [],
+              "multipartForm": [],
+              "file": []
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "",
+            "docs": "",
+            "auth": {
+              "mode": "bearer",
+              "bearer": {
+                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJzYWhhcmEyNUBnbWFpbC5jb20iLCJpYXQiOjE3NjkxMjkyOTYsImV4cCI6MTc2OTEyOTMyNn0.9E071wtjI2CM9vfef-IdZBOLyLs_6CKzSkXC-_fb-jI"
+              }
             }
           }
         }
@@ -275,9 +363,9 @@
       "node_modules",
       ".git"
     ],
-    "size": 0.0005197525024414062,
-    "filesCount": 3
+    "size": 0.0019445419311523438,
+    "filesCount": 10
   },
-  "exportedAt": "2026-01-19T17:18:59.356Z",
+  "exportedAt": "2026-01-23T02:46:43.058Z",
   "exportedUsing": "Bruno/3.0.2"
 }
