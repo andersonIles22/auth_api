@@ -170,7 +170,7 @@ const refreshToken= async(req,res,next)=>{
 }
 
 const changePassword=async (req, res, next)=>{
-  const {currentPass,newPass,confirmPass}=req.body;
+  const {currentPass,newPass}=req.body;
   const {id}=req.user;
   try {
     const queryPass=await db.query(

@@ -9,7 +9,7 @@ router.post('/login',validateLogin,authController.login);
 router.post('/refresh-token',authController.refreshToken);
 
 router.use(authMiddleware);
-router.post('/change-password',validateChangePassword,authController.changePassword);
+router.patch('/change-password',validateChangePassword,authController.changePassword);
 router.get('/allDb',authController.getAll);
 
 module.exports={router};
