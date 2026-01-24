@@ -147,12 +147,12 @@ const refreshToken= async(req,res,next)=>{
 
     //Creamos nuevo token
     const queryData=await db.query(
-      `SELECT id,email FROM users WHERE id=$1`,
+      `SELECT id,email,role FROM users WHERE id=$1`,
       [id]
     )
     const user=queryData.rows[0];
     const newToken=jwt.sign(
-      { id: user.id, email: user.email },
+      { id: user.id, email: user.email,role:user.role },
       process.env.JWT_SECRET,
       { expiresIn: process.env.JWT_EXPIRES_IN || '15min' }
     );
