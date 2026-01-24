@@ -8,7 +8,9 @@ const MESSAGES_OPERATION= Object.freeze({
     TOKEN_INVALID:"Token Invalid",
     TOKEN_REQUIRED:"Token Required",
     TOKEN_EXPIRED:'Token has expired',
-    URL_NO_FOUND:(url)=>`Path: ${url}, no Found`
+    URL_NO_FOUND:(url)=>`Path: ${url}, no Found`,
+    NOT_AUTHENTICATED:"No Authenticated",
+    DENIED_ACCESS:"Access Denied. Insufficient Permissions"
 });
 const MESSAGES_VALIDATION=({
     EMAIIL_TOO_LONG:"Email must be 255 chareacters or less",
