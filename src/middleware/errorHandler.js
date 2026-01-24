@@ -19,8 +19,8 @@ const errorHandler=(err, req, res, next)=>{
   });
 }
 /**
- * Error Creator, We create an error with statusCode and a message, then we past it to next error middelware.
- * @param {number} statusCode - Status Code HTTP (404)
+ * Error Creator, We create an error with statusCode and a message, then we past it to next error middleware.
+ * @param {number} statusCode - Status Code HTTP (Ex:404)
  * @param {String} message  - Descriptive Error Message
  * @param {Function} next  Function next of Express to Delegate the error.
  */
@@ -30,4 +30,17 @@ const error=(statusCode,message, next)=>{
     next(error);
 };
 
-module.exports = { errorHandler, error };
+/**
+ * Error Custom, We create an error with statusCode and message, then we response un error to middleware.
+ * @param {number} statusCode Status Code HTTP (Ex: 404)
+ * @param {String} message - Description Error Message
+ * @returns Object Error
+ */
+const customError=(statusCode,message)=>{
+return res.status(statusCode).json({
+  succes:false,
+  error:message
+})
+}
+
+module.exports = { errorHandler, error,customError };

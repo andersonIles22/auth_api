@@ -5,13 +5,12 @@ const {error}=require('../middleware/errorHandler');
 const {HTTP_STATUS}=require('../constants/httpStatusCode');
 const {MESSAGES_OPERATION, MESSAGES_VALIDATION}=require('../constants/statusMessages');
 const { parseTime } = require('../helpers/parseTime');
-const { user } = require('pg/lib/defaults');
 
 const register=async (req,res,next)=>{
     try {
         //CHECK IF EMAIL ALREADY EXISTS
         const {email, password, name}=req.body;
-        const queryRegister=await db.query('SELECT id FROM users_admin WHERE email=$1',[email]);
+        const queryRegister=await db.query('SELECT id FROM users WHERE email=$1',[email]);
         
         if(queryRegister.rows.length>0){
             return error(HTTP_STATUS.BAD_REQUEST,MESSAGES_OPERATION.EMAIL_ALREADY_EXIST,next)
@@ -21,7 +20,7 @@ const register=async (req,res,next)=>{
         const hashedPassword=await bcrypt.hash(password,salt)
 
         // CREATE USER
-        const result =await db.query('INSERT INTO users_admin (email,password,name) VALUES($1,$2,$3) RETURNING *',[email,hashedPassword,name]);
+        const result =await db.query('INSERT INTO users (email,password,name) VALUES($1,$2,$3) RETURNING *',[email,hashedPassword,name]);
         const userCreated= result.rows[0];
 
         const token=jwt.sign(
@@ -53,7 +52,7 @@ try {
     
     // Verificar que usuario existe
     const result = await db.query(
-      'SELECT * FROM users_admin WHERE email = $1',
+      'SELECT * FROM users WHERE email = $1',
       [email]
     );
     
@@ -84,7 +83,7 @@ try {
     const refreshTokenExpiresAt= new Date(Date.now() + parseTime(process.env.JWT_REFRESH_EXPIRES_IN||'7d'));
     //  Generar JWT
     const token = jwt.sign(
-      { id: user.id, email: user.email },
+      { id: user.id, email: user.email,role:user.role},
       process.env.JWT_SECRET,
       { expiresIn: process.env.JWT_EXPIRES_IN || '15min' }
     );
@@ -148,7 +147,7 @@ const refreshToken= async(req,res,next)=>{
 
     //Creamos nuevo token
     const queryData=await db.query(
-      `SELECT id,email FROM users_admin WHERE id=$1`,
+      `SELECT id,email FROM users WHERE id=$1`,
       [id]
     )
     const user=queryData.rows[0];
@@ -174,7 +173,7 @@ const changePassword=async (req, res, next)=>{
   const {id}=req.user;
   try {
     const queryPass=await db.query(
-      `SELECT password FROM users_admin WHERE id=$1`,
+      `SELECT password FROM users WHERE id=$1`,
       [id]
     )
     // Validamos que la contraseña actual sea la correcta
@@ -187,7 +186,7 @@ const changePassword=async (req, res, next)=>{
     
     //Actualizamos la contraseña
     const queryUpdate= await db.query(
-      `UPDATE users_admin SET password =$1 WHERE id=$2`,
+      `UPDATE users SET password =$1 WHERE id=$2`,
       [hashedPass,id]
     );
     //Forzamos a un nuevo login
@@ -205,7 +204,7 @@ const changePassword=async (req, res, next)=>{
 }
 const getAll=async(req,res,next)=>{
   try {
-    const queryAllNotes=await db.query('SELECT id,name,email FROM users_admin');
+    const queryAllNotes=await db.query('SELECT id,name,email FROM users');
     res.status(HTTP_STATUS.OK).json({
       success:true,
       data:queryAllNotes.rows
